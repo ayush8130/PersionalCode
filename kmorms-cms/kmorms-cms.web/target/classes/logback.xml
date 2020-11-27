@@ -1,0 +1,77 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+    <resetJUL>true</resetJUL>
+  </contextListener>
+
+  <!-- Allow configuration of logback via JMX -->
+  <jmxConfigurator />
+
+  <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+    <Target>System.out</Target>
+    <encoder>
+      <charset>utf-8</charset>
+      <pattern>%d{HH:mm:ss} %p %c{1}: %m%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+  </appender>
+
+  <appender name="Default" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+    <File>${catalina.base}/logs/kmorms-cms.log</File>
+    <Encoding>UTF-8</Encoding>
+    <expl>,.</expl>
+    <encoder>
+      <charset>utf-8</charset>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS},%p,%t,%c{1}: %m%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- rollover daily -->
+      <fileNamePattern>${catalina.base}/logs/kmorms-cms-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <!-- or whenever the file size reaches 25MB -->
+        <maxFileSize>25MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+  </appender>
+
+  <appender name="Sift" class="ch.qos.logback.classic.sift.SiftingAppender">
+    <!-- in the absence of the class attribute, it is assumed that the
+         desired discriminator type is
+         ch.qos.logback.classic.sift.MDCBasedDiscriminator -->
+    <discriminator>
+      <key>outletCode</key>
+      <defaultValue>unknown</defaultValue>
+    </discriminator>
+    <sift>
+      <appender name="FILE-${outletCode}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${catalina.base}/logs/batch/${outletCode}.log</file>
+        <append>false</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <FileNamePattern>${outletCode}.%d{yyyy-MM-dd}.log</FileNamePattern>
+
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+          <pattern>%d [%thread] %level %mdc %logger{35} - %msg%n</pattern>
+        </encoder>
+      </appender>
+    </sift>
+  </appender>
+
+
+  <!-- Do NOT change the default level to DEBUG or production servers will run out of disk -->
+  <root level="INFO">
+    <appender-ref ref="Console"/>
+    <appender-ref ref="Default"/>
+    <appender-ref ref="Sift"/>
+  </root>
+</configuration>

@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BugCollection version='3.0.1' threshold='low' effort='max'><Error></Error><Project><SrcDir>E:\Kmorms\kayra-market\cms\kmorms\kmorms-cms\kmorms-cms.integration\src\main\java</SrcDir><SrcDir>E:\Kmorms\kayra-market\cms\kmorms\kmorms-cms\kmorms-cms.integration\target\generated-sources\annotations</SrcDir><SrcDir>E:\Kmorms\kayra-market\cms\kmorms\kmorms-cms\kmorms-cms.integration\src\test\java</SrcDir></Project></BugCollection>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.2//EN" "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+    <!-- Miscellaneous: http://checkstyle.sourceforge.net/config_misc.html -->
+    <module name="NewlineAtEndOfFile">
+        <property name="lineSeparator" value="lf"/>
+    </module>
+
+    <!--
+        Disabled because scr plugin causes errors
+        <module name="Translation" />
+    -->
+    <module name="UniqueProperties" />
+
+    <!-- Size Violations: http://checkstyle.sourceforge.net/config_sizes.html -->
+    <module name="FileLength">
+        <property name="max" value="500"/>
+    </module>
+
+    <!-- Whitespace: http://checkstyle.sourceforge.net/config_whitespace.html -->
+    <module name="FileTabCharacter" />
+
+    <!-- Suppression Comment Filter: http://checkstyle.sourceforge.net/config.html -->
+    <module name="SuppressionCommentFilter" />
+
+    <!-- ====================================================================== -->
+    <!-- T R E E  W A L K E R -->
+    <!-- http://checkstyle.sourceforge.net/config.html#TreeWalker -->
+    <!-- ====================================================================== -->
+    <!-- Categories - Alphabetical Order -->
+    <!-- A B C D E F G H I J K L M N O P Q R S T U V -->
+    <module name="TreeWalker">
+        <module name="FileContentsHolder" />
+
+        <!-- Annotation: http://checkstyle.sourceforge.net/config_annotation.html -->
+        <module name="MissingDeprecated" />
+        <module name="MissingOverride" />
+        <module name="PackageAnnotation" />
+        <module name="SuppressWarnings" />
+
+        <!-- Blocks: http://checkstyle.sourceforge.net/config_blocks.html -->
+        <module name="EmptyBlock" />
+        <module name="LeftCurly" />
+        <module name="NeedBraces" />
+        <module name="RightCurly" />
+        <module name="AvoidNestedBlocks" />
+
+        <!-- Class Design: http://checkstyle.sourceforge.net/config_design.html -->
+        <module name="InterfaceIsType" />
+        <module name="FinalClass"/>
+        <module name="HideUtilityClassConstructor" />
+        <module name="MutableException" />
+        <module name="InnerTypeLast" />
+
+        <!-- Coding: http://checkstyle.sourceforge.net/config_coding.html -->
+        <module name="CovariantEquals" />
+        <module name="EmptyStatement" />
+        <module name="EqualsHashCode" />
+        <module name="HiddenField">
+            <property name="ignoreConstructorParameter" value="true" />
+            <property name="ignoreSetter" value="true" />
+            <property name="ignoreAbstractMethods" value="true" />
+        </module>
+        <module name="InnerAssignment" />
+        <module name="MagicNumber">
+            <property name="ignoreNumbers" value="-1, 0, 1, 2, 31"/>
+            <property name="ignoreAnnotation" value="true"/>
+        </module>
+        <module name="MissingSwitchDefault" />
+        <module name="ModifiedControlVariable" />
+        <module name="SimplifyBooleanExpression" />
+        <module name="SimplifyBooleanReturn" />
+        <module name="StringLiteralEquality" />
+        <module name="NoClone" />
+        <module name="NoFinalizer" />
+        <module name="IllegalCatch" />
+        <module name="IllegalThrows" />
+        <module name="PackageDeclaration" />
+        <module name="JUnitTestCase" />
+        <module name="IllegalType" />
+        <!--
+            // I disagree with http://checkstyle.sourceforge.net/config_coding.html#DeclarationOrder  ... but only slightly...
+
+            // SerializabaleIDs and Loger should be at the bottom of the class file. They both uninteresting and just add bloat to the top of the class. Othersise I agree with this
+            // Checkstyle does not allow you to set a buch of exclusions
+        <module name="DeclarationOrder" />
+        -->
+        <module name="ParameterAssignment" />
+        <module name="DefaultComesLast" />
+        <module name="UpperEll"/>
+        <module name="FallThrough" />
+        <module name="MultipleStringLiterals">
+            <property name="allowedDuplicates" value="3"/>
+        </module>
+        <module name="MultipleVariableDeclarations" />
+        <module name="UnnecessaryParentheses" />
+        <module name="OneStatementPerLine" />
+
+
+        <!-- Header: http://checkstyle.sourceforge.net/config_header.html -->
+
+        <!-- Imports: http://checkstyle.sourceforge.net/config_imports.html -->
+        <module name="AvoidStarImport" />
+        <module name="IllegalImport" />
+        <module name="RedundantImport" />
+        <module name="UnusedImports" />
+
+        <!-- Javadoc: http://checkstyle.sourceforge.net/config_javadoc.html -->
+        <!-- todo setup javadoc, but exclude tests and getters, setters, constructors, private methods -->
+        <module name="JavadocType" />
+        <module name="JavadocMethod">
+            <property name="allowUndeclaredRTE" value="true"/>
+            <property name="excludeScope" value="private"/>
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+        </module>
+        <module name="JavadocStyle" >
+            <property name="checkFirstSentence" value="false"/>
+        </module>
+
+        <!-- Metrics: http://checkstyle.sourceforge.net/config_metrics.html -->
+        <module name="BooleanExpressionComplexity" />
+        <module name="CyclomaticComplexity" />
+        <module name="JavaNCSS" />
+        <module name="ClassFanOutComplexity">
+            <property name="max" value="20"/>
+        </module>
+        <module name="NPathComplexity"/>
+
+        <!-- Miscellaneous: http://checkstyle.sourceforge.net/config_misc.html -->
+        <module name="UncommentedMain" />
+        <module name="ArrayTypeStyle" />
+        <module name="Indentation" />
+        <module name="TrailingComment" />
+        <module name="OuterTypeFilename" />
+
+        <!-- Modifiers: http://checkstyle.sourceforge.net/config_modifier.html -->
+        <module name="ModifierOrder" />
+        <module name="RedundantModifier" />
+
+        <!-- Naming Conventions: http://checkstyle.sourceforge.net/config_naming.html -->
+        <module name="AbstractClassName">
+                <property name="ignoreModifier" value="true" />
+        </module>
+        <module name="ClassTypeParameterName" />
+        <module name="ConstantName" />
+        <module name="LocalFinalVariableName" />
+        <module name="LocalVariableName" />
+        <module name="MemberName" />
+        <module name="MethodName" />
+        <module name="MethodTypeParameterName" />
+        <module name="PackageName" />
+        <module name="ParameterName" />
+        <module name="StaticVariableName" />
+        <module name="TypeName" />
+
+        <!-- Size Violations: http://checkstyle.sourceforge.net/config_sizes.html -->
+        <module name="LineLength">
+            <property name="max" value="160" />
+        </module>
+        <module name="ParameterNumber">
+            <property name="max" value="4"/>
+            <property name="tokens" value="METHOD_DEF"/>
+        </module>
+
+        <!-- Whitespace: http://checkstyle.sourceforge.net/config_whitespace.html -->
+        <module name="GenericWhitespace" />
+        <module name="NoWhitespaceAfter" />
+        <module name="NoWhitespaceBefore" />
+        <module name="OperatorWrap" />
+        <module name="ParenPad" />
+        <module name="TypecastParenPad" />
+        <module name="WhitespaceAfter" />
+        <module name="WhitespaceAround" />
+
+        <!-- No System.out and printStackTrace -->
+        <module name="Regexp">
+            <property name="format" value="System\.out\."/>
+            <property name="illegalPattern" value="true"/>
+            <property name="message" value="System.out should not be used"/>
+        </module>
+
+        <module name="Regexp">
+            <property name="format" value="\.printStackTrace\(\)"/>
+            <property name="illegalPattern" value="true"/>
+            <property name="message" value="Do not use printStackTrace()"/>
+        </module>
+
+    </module>
+
+    <!-- Miscellaneous other checks.                   -->
+    <!-- See http://checkstyle.sf.net/config_misc.html -->
+    <module name="RegexpSingleline">
+        <property name="format" value="[^*]\s+$"/> <!-- allow a space after javadoc -->
+        <property name="message" value="Line has trailing spaces."/>
+    </module>
+    <module name="RegexpSingleline">
+        <property name="format" value="^\s$"/>
+        <property name="message" value="Line has trailing spaces."/>
+    </module>
+</module>

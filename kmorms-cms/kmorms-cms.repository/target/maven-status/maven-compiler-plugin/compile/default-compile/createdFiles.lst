@@ -1,0 +1,6 @@
+com\kayra\market\kmorms\cms\event\CascadeSaveMongoEventListener.class
+com\kayra\market\kmorms\cms\annotation\CascadeSave.class
+com\kayra\market\kmorms\cms\event\CascadeCallback.class
+com\kayra\market\kmorms\cms\event\FieldCallback.class
+com\kayra\market\kmorms\cms\converter\WebPageWriterConverter.class
+com\kayra\market\kmorms\cms\repository\WebPageRepository.class

@@ -1,0 +1,44 @@
+package com.kayra.market.kmorms.cms.filter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+
+/**
+ * Filter used to change the method of the request to GET in case of a FORWARD
+ * see: https://jira.spring.io/browse/SPR-12848
+ */
+public class GetMethodConvertingFilter implements Filter {
+
+    @Override
+    public void init(FilterConfig config) throws ServletException {
+        // do nothing
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+        chain.doFilter(wrapRequest((HttpServletRequest) request), response);
+    }
+
+    @Override
+    public void destroy() {
+        // do nothing
+    }
+
+    private static HttpServletRequestWrapper wrapRequest(HttpServletRequest request) {
+        return new HttpServletRequestWrapper(request) {
+            @Override
+            public String getMethod() {
+                return "GET";
+            }
+        };
+    }
+}

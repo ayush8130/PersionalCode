@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+    xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+   <!-- Load app properties -->
+  <beans:import resource="classpath*:/META-INF/spring/kmorms-cms-properties.xml"/>
+
+  <beans:bean id="httpClient" class="org.apache.http.impl.client.DefaultHttpClient">
+		<beans:constructor-arg>
+			<beans:bean class="org.apache.http.impl.conn.PoolingClientConnectionManager" />
+		</beans:constructor-arg>
+  </beans:bean>
+
+  <beans:bean id="clientHttpRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+		<beans:constructor-arg ref="httpClient" />
+		<beans:property name="readTimeout" value="${api.readTimeout:2000}" />
+  </beans:bean>
+
+  <beans:bean id="restTemplateFactory" class="com.kayra.market.kmorms.cms.integration.service.impl.common.RestTemplateFactory">
+      <beans:constructor-arg name="httpRequestFactory" ref="clientHttpRequestFactory" />
+      <beans:constructor-arg name="scopedCredentials">
+          <beans:bean class="com.kayra.market.kmorms.cms.integration.service.impl.common.ScopedCredentials">
+              <beans:constructor-arg name="authScope">
+                  <beans:bean class="org.apache.http.auth.AuthScope">
+                      <beans:constructor-arg index="0" value="${kmorms.data.host:localhost}" />
+                      <beans:constructor-arg index="1" value="${kmorms.data.port:8080}" />
+                  </beans:bean>
+              </beans:constructor-arg>
+              <beans:constructor-arg name="credentials">
+                  <beans:bean class="org.apache.http.auth.UsernamePasswordCredentials">
+                      <beans:constructor-arg name="userName" value="${kmorms.data.username:data}" />
+                      <beans:constructor-arg name="password" value="${kmorms.data.password:data}" />
+                  </beans:bean>
+              </beans:constructor-arg>
+          </beans:bean>
+      </beans:constructor-arg>
+  </beans:bean>
+
+  <beans:bean id="kmormsAuthenticationService" class="com.kayra.market.kmorms.cms.integration.service.impl.KmormsAuthenticationServiceImpl">
+      <beans:constructor-arg name="webDataService">
+          <beans:bean class="com.kayra.market.kmorms.cms.integration.service.impl.common.WebDataServiceImpl">
+              <beans:constructor-arg name="restTemplate">
+                  <beans:bean factory-bean="restTemplateFactory" factory-method="createJsonRestTemplate" />
+              </beans:constructor-arg>
+          </beans:bean>
+      </beans:constructor-arg>
+      <beans:constructor-arg name="kmormsSellerURL" value="http://${kmorms.data.host:localhost}:${kmorms.data.port:8080}/${kmorms.context:kmorms}/seller" />
+      <beans:constructor-arg name="kmormsAdminURL" value="http://${kmorms.data.host:localhost}:${kmorms.data.port:8080}/${kmorms.context:kmorms}/admin" />
+  </beans:bean>
+   
+  <beans:bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+  <beans:bean id="authenticationTrustResolver" class="org.springframework.security.authentication.AuthenticationTrustResolverImpl" />
+
+  <http pattern="/cms/**" 
+  		auto-config="false" 
+  		use-expressions="true" 
+  		disable-url-rewriting="true" 
+  		create-session="stateless"
+        entry-point-ref="restAuthenticationEntryPoint"
+        authentication-manager-ref="cmsAuthenticationManager">
+    <custom-filter ref="cmsSecuritySessionTokenFilter" after="BASIC_AUTH_FILTER"/>
+    <intercept-url pattern="/member/**" access="isAuthenticated()"/>
+    <intercept-url pattern="/cms/resources/**" access="permitAll"/>
+    <intercept-url pattern="/cms/login/**" access="permitAll"/>
+    <intercept-url pattern="/**" access="permitAll"/>
+    <!--<anonymous enabled="false"/>-->
+<!--     <http-basic entry-point-ref="restAuthenticationEntryPoint"/> -->
+<!-- 	<http-basic/> -->
+  </http>
+  
+  <beans:bean id="cmsSecuritySessionTokenFilter" class="com.kayra.market.kmorms.cms.security.CMSSecuritySessionTokenFIlter">
+    <beans:constructor-arg ref="cmsLoginService"/>
+  </beans:bean>
+
+  <beans:bean id="cmsLoginService" class="com.kayra.market.kmorms.cms.security.CMSLoginServiceImpl">
+    <beans:constructor-arg name="kmormsAuthenticationService" ref="kmormsAuthenticationService"/>
+    <beans:constructor-arg index="1">
+      <beans:list>
+        <beans:bean class="org.springframework.security.core.authority.SimpleGrantedAuthority">
+          <beans:constructor-arg value="ROLE_BOOKS"/>
+        </beans:bean>
+      </beans:list>
+    </beans:constructor-arg>
+  </beans:bean>
+	  
+  <authentication-manager id="cmsAuthenticationManager">
+    <authentication-provider>
+      <user-service>
+        <user name="cms" password="cms" authorities="ROLE_CMS"/>
+      </user-service>
+    </authentication-provider>
+  </authentication-manager>
+
+  <beans:bean id="restAuthenticationEntryPoint" class="com.kayra.market.kmorms.cms.integration.security.web.RestAuthenticationEntryPoint">
+    <beans:property name="realmName" value="kmorms-cms"/>
+  </beans:bean>
+
+</beans:beans>
+

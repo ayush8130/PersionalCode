@@ -1,0 +1,311 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.kayra.market.kmorms.cms</groupId>
+    <artifactId>kmorms-cms</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.kayra.market.kmorms.cms.service</groupId>
+  <artifactId>kmorms-cms.service</artifactId>
+  <name>Kayra Market - CMS Service</name>
+    <!-- ====================================================================== -->
+    <!-- B U I L D  D E F I N I T I O N -->
+    <!-- ====================================================================== -->
+    <build>
+        <plugins>
+            <!-- Add a -test.jar so that sub-projects can use some mocked services -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>test-jar</id>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*Test.class</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <!-- Plugins related to coding standards -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>check-java-code</id>
+                        <configuration>
+                            <maxAllowedViolations>10</maxAllowedViolations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- ====================================================================== -->
+    <!-- D E P E N D E N C I E S -->
+    <!-- ====================================================================== -->
+    <dependencies>
+        <!-- General dependencies for standard applications -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+
+        <!-- webmvc is only required for some annotations for exceptions -->
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+          <scope>compile</scope>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>javax.servlet</groupId>
+          <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
+        <!-- ROO dependencies -->
+        <dependency>
+            <groupId>org.springframework.roo</groupId>
+            <artifactId>org.springframework.roo.annotations</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Spring dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+        <!-- JavaMail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
+        <!-- String Template -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>ST4</artifactId>
+            <version>4.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kayra.market.kmorms.cms.repository</groupId>
+            <artifactId>kmorms-cms.repository</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kayra.market.cq</groupId>
+            <artifactId>market-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>com.kayra.market.kmorms.cms.documentmodel</groupId>
+          <artifactId>kmorms-cms.documentmodel</artifactId>
+          <version>${project.version}</version>
+          <scope>test</scope>
+          <type>test-jar</type>
+          <exclusions>
+            <exclusion>
+              <groupId>org.apache.commons</groupId>
+              <artifactId>commons-lang3</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+	    <!-- the core, which includes Streaming API, shared low-level abstractions
+	      (but NOT data-binding) -->
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-core</artifactId>
+	    </dependency>
+	
+	    <!-- Just the annotations; use this dependency if you want to attach annotations
+	      to classes without connecting them to the code. -->
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-annotations</artifactId>
+	    </dependency>
+	
+	    <!-- databinding; ObjectMapper, JsonNode and related classes are here -->
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-databind</artifactId>
+	    </dependency>
+	
+	    <!-- smile (binary JSON). Other artifacts in this group do other formats. -->
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.dataformat</groupId>
+	      <artifactId>jackson-dataformat-smile</artifactId>
+	    </dependency>
+	    <!-- JAX-RS provider -->
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+	      <artifactId>jackson-jaxrs-json-provider</artifactId>
+	    </dependency>
+	    <!-- Support for JAX-B annotations as additional configuration -->
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.module</groupId>
+	      <artifactId>jackson-module-jaxb-annotations</artifactId>
+	    </dependency>
+	    <!-- Jedis -->
+	    <dependency>
+	      <groupId>redis.clients</groupId>
+	      <artifactId>jedis</artifactId>
+	    </dependency>
+	    <dependency>
+	      <groupId>commons-pool</groupId>
+	      <artifactId>commons-pool</artifactId>
+	    </dependency>
+	    <dependency>
+	      <groupId>commons-dbcp</groupId>
+	      <artifactId>commons-dbcp</artifactId>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.apache.commons</groupId>
+	      <artifactId>commons-collections4</artifactId>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-core</artifactId>
+	    </dependency>
+	    <!-- Hamcrest -->
+	    <dependency>
+	      <groupId>org.hamcrest</groupId>
+	      <artifactId>hamcrest-all</artifactId>
+	      <scope>test</scope>
+	    </dependency>
+	
+	    <dependency>
+	      <groupId>org.skyscreamer</groupId>
+	      <artifactId>jsonassert</artifactId>
+	      <version>1.2.3</version>
+	      <scope>test</scope>
+	    </dependency>
+	
+	    <dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-validator</artifactId>
+	    </dependency>
+	    <dependency>
+	      <groupId>javax.validation</groupId>
+	      <artifactId>validation-api</artifactId>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.apache.commons</groupId>
+	      <artifactId>commons-io</artifactId>
+	      <version>1.3.2</version>
+	      <scope>test</scope>
+	    </dependency>
+	    
+	    <dependency>
+		    <groupId>com.amazonaws</groupId>
+		    <artifactId>aws-java-sdk-sns</artifactId>
+		</dependency>
+	    
+    </dependencies>
+
+    <!-- ====================================================================== -->
+    <!-- P R O F I L E S                                                        -->
+    <!-- ====================================================================== -->
+    <profiles>
+        <profile>
+            <!-- Temporary minimum coverage until we raise our test coverage to agreed levels. See main pom for details -->
+            <id>relax-coverage</id>
+            <properties>
+                <coverage.complexity>0.11</coverage.complexity>
+                <coverage.class>0.19</coverage.class>
+                <coverage.instruction>0.16</coverage.instruction>
+                <coverage.line>0.16</coverage.line>
+            </properties>
+        </profile>
+    </profiles>
+</project>

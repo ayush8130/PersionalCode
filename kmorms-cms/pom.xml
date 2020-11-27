@@ -1,0 +1,621 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.kayra.market.kmorms</groupId>
+    <artifactId>kmorms</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.kayra.market.kmorms.cms</groupId>
+  <artifactId>kmorms-cms</artifactId>
+  <packaging>pom</packaging>
+  <name>Kayra Market - CMS Main</name>
+  <description>Kayra Market - CMS Main reactor POM</description>
+
+
+  <!-- ====================================================================== -->
+  <!-- P R O P E R T I E S                                                    -->
+  <!-- ====================================================================== -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>8</java.version>
+    <spring.version>5.1.3.RELEASE</spring.version>
+    <aspectj.version>1.8.3</aspectj.version>
+    <roo.version>1.2.5.RELEASE</roo.version>
+
+    <!-- MPJ 1.7.7 slf4j? -->
+    <slf4j.version>1.7.5</slf4j.version>
+
+    <!-- Used to locate the profile specific configuration file. -->
+    <build.profile.id>dev</build.profile.id>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Only unit tests are run by default. -->
+    <integration.test.files>**/*IntegrationTest.java</integration.test.files>
+    <acceptance.test.files>**/*Spec.java</acceptance.test.files>
+    <roo.aspect.test.files>**/*_Roo_*</roo.aspect.test.files>
+    <server.url>http://localhost:8080</server.url>
+    <!--<spring-security.version>3.2.5.RELEASE</spring-security.version> -->
+    <spring-security.version>3.2.5.RELEASE</spring-security.version>
+    <kmorms-cms.context>kmorms-cms</kmorms-cms.context>
+    
+    <spring-data>2.1.0.RELEASE</spring-data>
+    <querydsl.version>4.2.1</querydsl.version>
+	<mysema.maven.version>1.1.3</mysema.maven.version>
+    <mongodb-reactivestreams.version>1.9.2</mongodb-reactivestreams.version>
+	<apachetiles.version>3.0.5</apachetiles.version>
+    <hibernate.version>4.3.11.Final</hibernate.version>
+    <argLine>-javaagent:${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar</argLine>
+  </properties>
+
+  <!-- ====================================================================== -->
+  <!-- P R O F I L E S                                                        -->
+  <!-- ====================================================================== -->
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <!-- Dev profile is active by default -->
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <!-- Specifies the build profile id, which is used to find out the correct properties file. This is not actually necessary for this example, but 
+          it can be used for other purposes. -->
+        <build.profile.id>dev</build.profile.id>
+        <skip.unit.tests>false</skip.unit.tests>
+      </properties>
+    </profile>
+    <profile>
+      <id>it</id>
+      <properties>
+        <!-- Specifies the build profile id, which is used to find out the correct properties file. This is not actually necessary for this example, but 
+          it can be used for other purposes. -->
+        <build.profile.id>it</build.profile.id>
+        <skip.unit.tests>true</skip.unit.tests>
+      </properties>
+    </profile>
+  </profiles>
+
+  <!-- ====================================================================== -->
+  <!-- R E P O S I T O R I E S                                                -->
+  <!-- ====================================================================== -->
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+    <repository>
+	    <id>spring-milestone</id>
+	    <name>Spring Maven MILESTONE Repository</name>
+	    <url>https://repo.spring.io/libs-milestone</url>
+	</repository>
+    <repository>
+      <id>spring-maven-release</id>
+      <name>Spring Maven Release Repository</name>
+      <url>http://maven.springframework.org/release</url>
+    </repository>
+    <repository>
+      <id>spring-maven-milestone</id>
+      <name>Spring Maven Milestone Repository</name>
+      <url>http://maven.springframework.org/milestone</url>
+    </repository>
+    <repository>
+      <id>spring-roo-repository</id>
+      <name>Spring Roo Repository</name>
+      <url>http://spring-roo-repository.springsource.org/release</url>
+    </repository>
+    <repository>
+        <id>github-repo-releases</id>
+        <url>https://raw.github.com/whummer/jaxb-facets/master/releases</url>
+    </repository>
+  </repositories>
+
+  <!-- ====================================================================== -->
+  <!-- P L U G I N    R E P O S I T O R I E S                                 -->
+  <!-- ====================================================================== -->
+  <pluginRepositories>
+    <pluginRepository>
+      <id>spring-maven-release</id>
+      <name>Spring Maven Release Repository</name>
+      <url>http://maven.springframework.org/release</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>spring-maven-milestone</id>
+      <name>Spring Maven Milestone Repository</name>
+      <url>http://maven.springframework.org/milestone</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>spring-roo-repository</id>
+      <name>Spring Roo Repository</name>
+      <url>http://spring-roo-repository.springsource.org/release</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <!-- ====================================================================== -->
+  <!-- D E P E N D E N C Y   M A N A G E M E N T                              -->
+  <!-- ====================================================================== -->
+  <dependencyManagement>
+    <dependencies>
+
+      <!-- General dependencies for standard applications -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- Logging - SLF4J with logback-classic -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <!-- route common-logging APIs to SLF4j -->
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <!-- route all java-util-logging to SLF4j - Note this has a 6000% impact of logging to JUL - consider logback LevelChangePropegator -->
+        <groupId>org.slf4j</groupId>
+        <artifactId>jul-to-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>log4j-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${aspectj.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${aspectj.version}</version>
+      </dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.0.1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+        <groupId>net.sf.flexjson</groupId>
+        <artifactId>flexjson</artifactId>
+        <version>2.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.4</version>
+      </dependency>
+      <!-- Joda Time & Money Hibernate support -->
+      <dependency>
+        <groupId>org.jadira.usertype</groupId>
+        <artifactId>usertype.core</artifactId>
+        <version>3.2.0.GA</version>
+      </dependency>
+
+      <!-- ROO dependencies -->
+      <dependency>
+        <groupId>org.springframework.roo</groupId>
+        <artifactId>org.springframework.roo.annotations</artifactId>
+        <version>${roo.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- Spring dependencies -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aspects</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-jpa</artifactId>
+        <version>2.1.0.RELEASE</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>spring-tx</artifactId>
+            <groupId>org.springframework</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-instrument</artifactId>
+        <version>${spring.version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>net.rossillo.mvc.cache</groupId>
+        <artifactId>spring-mvc-cache-control</artifactId>
+        <version>1.1.1-RELEASE</version>
+        <scope>compile</scope>
+      </dependency>
+
+      <!--PERSISTENCE -->
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.11</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>1.4.182</version>
+        <!-- at the moment selenium tests require this to be provided not only in test scope -->
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>${hibernate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>${hibernate.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-jpamodelgen</artifactId>
+        <version>${hibernate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>6.1.5.Final</version>
+      </dependency>
+	  <dependency>
+	    <groupId>javax.validation</groupId>
+	    <artifactId>validation-api</artifactId>
+	    <version>2.0.1.Final</version>
+	  </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${spring.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>spring-tx</artifactId>
+            <groupId>org.springframework</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>${spring.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>spring-tx</artifactId>
+            <groupId>org.springframework</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-pool</groupId>
+        <artifactId>commons-pool</artifactId>
+        <version>1.5.6</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>1.4</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      
+	  <!-- AWS SNS -->
+      <dependency>
+	    <groupId>com.amazonaws</groupId>
+	    <artifactId>aws-java-sdk-sns</artifactId>
+	    <version>1.11.15</version>
+	  </dependency>
+
+      <!-- CACHE -->
+      <!-- EHCache Core APIs -->
+      <dependency>
+          <groupId>net.sf.ehcache</groupId>
+          <artifactId>ehcache-core</artifactId>
+          <version>2.6.9</version>
+      </dependency>
+      <!-- Hibernate EHCache API -->
+      <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-ehcache</artifactId>
+          <version>${hibernate.version}</version>
+      </dependency>
+      
+      <dependency>
+          <groupId>redis.clients</groupId>
+          <artifactId>jedis</artifactId>
+          <version>2.7.2</version>
+      </dependency>
+      
+      <dependency>
+          <groupId>org.springframework.data</groupId>
+          <artifactId>spring-data-mongodb</artifactId>
+          <version>${spring-data}</version>
+      </dependency>
+	  <dependency>
+		<groupId>org.mongodb</groupId>
+		<artifactId>mongo-java-driver</artifactId>
+		<version>3.8.2</version>
+	  </dependency>
+      <dependency>
+          <groupId>org.mongodb</groupId>
+          <artifactId>mongodb-driver-reactivestreams</artifactId>
+          <version>${mongodb-reactivestreams.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>com.querydsl</groupId>
+          <artifactId>querydsl-mongodb</artifactId>
+          <version>${querydsl.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>com.querydsl</groupId>
+          <artifactId>querydsl-apt</artifactId>
+          <version>${querydsl.version}</version>
+      </dependency>
+      
+      <!-- Apache Tiles -->
+      <dependency>
+          <groupId>org.apache.tiles</groupId>
+          <artifactId>tiles-core</artifactId>
+          <version>${apachetiles.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.tiles</groupId>
+          <artifactId>tiles-api</artifactId>
+          <version>${apachetiles.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.tiles</groupId>
+          <artifactId>tiles-servlet</artifactId>
+          <version>${apachetiles.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.tiles</groupId>
+          <artifactId>tiles-jsp</artifactId>
+          <version>${apachetiles.version}</version>
+	  </dependency>
+        
+    </dependencies>
+  </dependencyManagement>
+
+
+  <build>
+    <!-- ====================================================================== -->
+    <!-- P L U G I N    M A N A G E M E N T                                     -->
+    <!-- ====================================================================== -->
+    <pluginManagement>
+      <plugins>
+      	<!-- Surefire Plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <argLine>
+                <!-- Do not define argLine here! You will wipe out our code coverage! Use Project argLine property instead -->
+            </argLine>
+            <!--see: https://issuetracker.springsource.com/browse/EBR-220 -->
+            <!-- <junitArtifactName>org.junit:com.springsource.org.junit</junitArtifactName> -->
+            <printSummary>true</printSummary>
+            <redirectTestOutputToFile>false</redirectTestOutputToFile>
+            <!-- Excludes integration tests when unit tests are run. -->
+            <excludes>
+              <exclude>${roo.aspect.test.files}</exclude>
+              <!-- <exclude>${integration.test.files}</exclude> -->
+            </excludes>
+            <systemPropertyVariables>
+              <org.jboss.logging.provider>slf4j</org.jboss.logging.provider>
+              <logback.debug>true</logback.debug>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
+
+        <!-- Failsafe Plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <configuration>
+            <includes>
+              <include>${integration.test.files}</include>
+            </includes>
+            <excludes>
+              <exclude>${roo.aspect.test.files}</exclude>
+            </excludes>
+            <systemProperties>
+              <org.jboss.logging.provider>slf4j</org.jboss.logging.provider>
+              <logback.debug>false</logback.debug>
+            </systemProperties>
+          </configuration>
+          <executions>
+            <execution>
+              <id>integration-test</id>
+              <goals>
+                <goal>integration-test</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>verify</id>
+              <goals>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.2</version>
+          <!-- <configuration> <webXml>target/web.xml</webXml> </configuration> -->
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.6.1</version>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <compilerArgument>-Xlint:all</compilerArgument>
+            <showWarnings>true</showWarnings>
+	        <showDeprecation>true</showDeprecation>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>aspectj-maven-plugin</artifactId>
+          <version>1.4</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.aspectj</groupId>
+              <artifactId>aspectjrt</artifactId>
+              <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.aspectj</groupId>
+              <artifactId>aspectjtools</artifactId>
+              <version>${aspectj.version}</version>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <phase>process-sources</phase>
+              <goals>
+                <goal>compile</goal>
+                <goal>test-compile</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <outxml>true</outxml>
+            <showWeaveInfo>false</showWeaveInfo>
+            <aspectLibraries>
+              <aspectLibrary>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+              </aspectLibrary>
+            </aspectLibraries>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <!-- Aspects in src/main/java and src/main/aspects are added as default in the compile goal. Aspects in src/test/java and src/test/aspects 
+              are added as default in the test-compile goal. Aspects in src/main/java are added in the test-compile goal if weaveWithAspectsInMainSourceFolder is set 
+              to true -->
+            <weaveWithAspectsInMainSourceFolder>false</weaveWithAspectsInMainSourceFolder>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <configuration>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>2.2</version>
+          <configuration>
+            <fork>false</fork>
+            <tomcatLoggingFile>${project.build.directory}/tomcat/logs/tomcat.log</tomcatLoggingFile>
+            <path>/${kmorms-cms.context}</path>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>8.1.4.v20120524</version>
+          <configuration>
+            <webAppConfig>
+              <contextPath>/${kmorms-cms.context}</contextPath>
+            </webAppConfig>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  
+  <modules>
+  	<module>kmorms-cms.documentmodel</module>
+  	<module>kmorms-cms.repository</module>
+  	<module>kmorms-cms.service</module>
+  	<module>kmorms-cms.web</module>
+  	<module>kmorms-cms.integration</module>
+  </modules>
+</project>

@@ -1,0 +1,13 @@
+com\kayra\market\kmorms\cms\security\CMSLoginService.class
+com\kayra\market\kmorms\cms\web\WebPageController.class
+com\kayra\market\kmorms\cms\web\common\RestErrorResponseFactory.class
+com\kayra\market\kmorms\cms\filter\GetMethodConvertingFilter.class
+com\kayra\market\kmorms\cms\security\TokenBasedUserAuthentication.class
+com\kayra\market\kmorms\cms\security\CMSLoginServiceImpl.class
+com\kayra\market\kmorms\cms\security\SecurityToken.class
+com\kayra\market\kmorms\cms\web\common\AbstractMessageFacade.class
+com\kayra\market\kmorms\cms\web\common\UserTransactionErrorFactory.class
+com\kayra\market\kmorms\cms\security\CookieUtils.class
+com\kayra\market\kmorms\cms\filter\GetMethodConvertingFilter$1.class
+com\kayra\market\kmorms\cms\security\CMSSecuritySessionTokenFIlter.class
+com\kayra\market\kmorms\cms\web\common\CMSApiMessageFacade.class

@@ -1,0 +1,5 @@
+      <!--<script src="resources/js/jquery_cookie_plugin_v1.4.1.js"></script>-->
+      <script type="text/javascript">
+          alert(1);
+
+        </script>

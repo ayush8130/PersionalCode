@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <!-- BEAN: propertyConfigurer
+        Load all known property files. Defaults are stored on the classpath, and should fall under the META-INF/spring directory.
+        Production configuration is overridden by files in /etc/kmorms-cms.
+
+        The located property files are parsed and their values can then be used within application context files in the form of ${propertyKey}.
+
+        NOTE!!!!: You can only have one of these property-placeholders, otherwise multiple resolvers are created and conflict with each other
+        causing thing to not be loaded.
+    -->
+    <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:/db.properties</value>
+                <value>classpath*:/META-INF/spring/hibernate.properties</value>
+                <value>classpath*:/META-INF/spring/kmorms-cms.properties</value>
+                <value>classpath*:/META-INF/spring/kmorms-cms-integration.properties</value>
+
+                <!-- Above defaults can be overridden by configuration in /etc/kmorms-cms -->
+                <value>file:///etc/kmorms-cms/db.properties</value>
+                <value>file:///etc/kmorms-cms/hibernate.properties</value>
+                <value>file:///etc/kmorms-cms/kmorms-cms.properties</value>
+                <value>file:///etc/kmorms-cms/kmorms-cms-integration.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+
+</beans>

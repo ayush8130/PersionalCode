@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- AspectJ load-time weaving options -->
+<aspectj>
+
+  <!-- Use -showWeaveInfo option to log what is being woven and load time -->
+  <weaver options="-Xset:weaveJavaxPackages=true -showWeaveInfo">
+      <include within="com.kayra..*"/>
+      <!-- Dump the generated classes for debugging:
+      <dump  within="com.kayra..*"/>
+      -->
+  </weaver>
+
+</aspectj>

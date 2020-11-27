@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+    xsi:schemaLocation="
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/data/mongo
+       http://www.springframework.org/schema/data/mongo/spring-mongo-2.0.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+    <context:annotation-config />
+
+    <mongo:mongo-client id="mongoClient" host="localhost" port="27017" />
+	    
+    <mongo:db-factory id="mongoDbFactory" dbname="Demo" mongo-ref="mongoClient" />
+
+    <!-- bean id="gridFsTemplate" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
+        <constructor-arg ref="mongoDbFactory" />
+        <constructor-arg ref="mongoConverter" />
+    </bean -->
+
+    <!--  mongo:mapping-converter id="mongoConverter" base-package="com.kayra.market.kmorms.cms.converter">
+        <mongo:custom-converters base-package="com.kayra.market.kmorms.cms.converter" />
+    </mongo:mapping-converter -->
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongoDbFactory" />
+        <!-- constructor-arg ref="mongoConverter" /-->
+    </bean>
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+    <mongo:repositories base-package="com.kayra.market.kmorms.cms.documentmodel" mongo-template-ref="mongoTemplate" />
+    
+    <mongo:repositories base-package="com.kayra.market.kmorms.cms.repository" mongo-template-ref="mongoTemplate" />
+    
+    <bean class="com.kayra.market.kmorms.cms.event.CascadeSaveMongoEventListener" />
+    
+    
+   
+<!--  
+      <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    	<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+
+    <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager" proxy-target-class="false"/>
+     
+
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="persistenceUnit"/>
+        <property name="dataSource"  ref="dataSource"/>
+        <property name="packagesToScan" value="com.kayra.market.kmorms.model" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+              <property name="databasePlatform" value="${hibernate.dialect:org.hibernate.dialect.MySQLDialect}"/>
+              <property name="generateDdl" value="false"/>
+              <property name="showSql" value="${hibernate.show_sql:false}"/>
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <util:map>
+              <entry key="hibernate.dialect" value="${hibernate.dialect:org.hibernate.dialect.MySQLDialect}"/>
+              <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto:validate}"/>
+              <entry key="hibernate.show_sql" value="${hibernate.show_sql:false}"/>
+              <entry key="hibernate.format_sql" value="${hibernate.format_sql:false}"/>
+              <entry key="hibernate.use_sql_comments" value="${hibernate.use_sql_comments:false}"/>
+              <entry key="hibernate.generate_statistics" value="${hibernate.generate_statistics:false}"/>
+              <entry key="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+
+              <entry key="javax.persistence.transactionType" value="RESOURCE_LOCAL"/>
+              <entry key="javax.persistence.validation.factory" value-ref="validator"/>
+            </util:map>
+        </property>
+    </bean>
+ -->
+    <!-- MySql DataSource 
+    <bean id="dataSource" class="com.kayra.dbcp.ManagedBasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${db.driver:com.mysql.jdbc.Driver}"/>
+        <property name="url" value="${db.url:jdbc:mysql://${db.host:localhost}:${db.port:3306}/${db.name:kmorms}?UseUnicode=true&amp;characterEncoding=utf8}"/>
+        <property name="username" value="${db.username:kmorms}"/>
+        <property name="password" value="${db.password:kmorms}"/>
+        <property name="validationQuery" value="${db.pool.validation.query}"/>
+
+        <property name="maxActive" value="${db.pool.maxActive:200}"/>
+        <property name="maxIdle" value="10"/>
+        <property name="minIdle" value="5"/>
+        <property name="initialSize" value="5"/>
+        <property name="maxWait" value="${db.pool.maxWait:2000}"/>
+
+        <property name="logAbandoned" value="true"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+    </bean>
+-->
+
+</beans>

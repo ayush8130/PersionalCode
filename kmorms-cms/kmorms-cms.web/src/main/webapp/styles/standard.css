@@ -1,0 +1,910 @@
+/* main elements */
+
+body,div,td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #666;
+}
+
+body {
+    background-color: #fff;
+    text-align: center;
+}
+
+#header {
+    margin-bottom: 1em;
+}
+
+#wrapper {
+    width:1000px;
+    min-width: 1000px;
+    max-width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+
+    /* fix max-width incompatibility in IE6 */
+    width:expression(document.body.clientWidth > 1000? "1000px": "auto" );
+
+    overflow:hidden;
+    display:block;
+}
+
+/* header and footer elements */
+
+#main {
+    overflow:hidden;
+    display:box;
+}
+
+#menu {
+    background: #eee;
+    position:relative;
+    float:left;
+    left:0px;
+    width:220px;
+    margin-right:15px;
+}
+
+#menu ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li{
+    padding: 0px;
+}
+
+
+#menu a, #menu h2 {
+    display: block;
+    margin: 0;
+    padding: 2px 6px;
+    color:#FFFFFF;
+}
+
+#menu h2 {
+    color: #fff;
+    background: #C88917;
+    text-transform: uppercase;
+    font-weight:bold;
+    font-size: 12px;
+}
+
+#menu a {
+    color: #666666;
+    background: #efefef;
+    text-decoration: none;
+    padding: 2px 12px;
+}
+
+#menu a:hover {
+    color: #648C1D;
+    background: #fff;
+}
+
+#footer {
+    background:#fff;
+    border:none;
+    margin-top:15px;
+    border-top:1px solid #999999;
+}
+
+#footer .new {
+    float:left;
+}
+
+#footer a:link {color: #C88917;}
+
+.quicklinks {
+    clear:both;
+    padding-bottom: 15px
+}
+.quicklinks span {
+    float: right;
+}
+
+table.navigation {
+    border: 0px;
+}
+
+label {
+    width:200px;
+    float:left;
+    margin-left: 5px;
+    margin-top: 0px;
+}
+
+input {
+    height:20px;
+}
+
+input, textarea, select {
+    border:1px solid #B3B3B3;
+}
+
+input.image {
+    border: none;
+    height: auto;
+    vertical-align: middle;
+}
+
+submit {
+    height:25px;
+}
+
+div {
+    text-align: left;
+}
+
+div .box {
+    display:block;
+    margin-left:105px;
+    height: 1em;
+}
+
+/* menu elements*/
+
+a.menu, a.menu:link, a.menu:visited {display:block; width:150px; height:25px;}
+/* text styles */
+
+h1,h2,h3 {
+    font-family: Helvetica, sans-serif;
+    color: #7db223;
+}
+
+h1 {
+    font-size: 20px;
+    line-height: 26px;
+}
+
+h2 {
+    font-size: 18px;
+    line-height: 20px;
+}
+
+h3 {
+    font-size: 15px;
+    line-height: 21px;
+    color:#555;
+}
+
+h4 {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.errors {
+    color: red;
+    font-weight: bold;
+    display: block;
+    margin-left: 105px;
+}
+
+a {
+    text-decoration: underline;
+    font-size: 12px;
+}
+
+a img {
+    border: 0 none;
+    vertical-align: middle;
+}
+
+tr:nth-child(odd) {
+    background-color: #FFFFFF;
+}
+
+tr:nth-child(even) {
+    background-color: #EFEFEF;
+}
+
+a:link {
+    color: #C88917;
+}
+
+a:hover {
+    color: #456314;
+}
+
+a:active {
+    color: #7db223;
+}
+
+a:visited {
+    color: #7db223;
+}
+
+a.sorting:visited, a.sorting_asc:visited, a.sorting_desc:visited {
+    color:#ffffff;
+}
+
+li {
+    padding-top: 5px;
+    text-align: left;
+}
+
+ul li {
+    margin:0 0 0.25em 0;
+    padding:0;
+}
+/* table elements */
+
+table {
+    background: #EEEEEE;
+    margin: 2px 0 0 0;
+    border: 1px solid #BBBBBB;
+    border-collapse: collapse;
+    width: 100%
+}
+
+table table {
+    margin: -5px 0;
+    border: 0px solid #e0e7d3;
+    width: 100%;
+}
+
+table td,table th {
+    padding: 2px;
+    border: 1px solid #CCCCCC;
+}
+
+table td form {
+    text-align:center;
+    vertical-align: middle;
+    margin: 0px;
+}
+
+table th {
+    font-size: 0.9em;
+    text-align: left;
+    font-weight: bold;
+    color: #FFF;
+    background: #999;
+}
+
+table thead {
+    font-weight: bold;
+    font-style: italic;
+    background-color: #BBBBBB;
+}
+
+table a:link {color: #303030;}
+
+.utilbox {width: 18px;}
+
+caption {
+    caption-side: top;
+    width: auto;
+    text-align: left;
+    font-size: 12px;
+    color: #848f73;
+    padding-bottom: 4px;
+}
+
+fieldset {
+    background: #e0e7d3;
+    padding: 8px;
+    padding-bottom: 22px;
+    border: none;
+    width: 560px;
+}
+
+fieldset label {
+    width: 70px;
+    float: left;
+    margin-top: 1.7em;
+    margin-left: 20px;
+}
+
+fieldset textfield {
+    margin: 3px;
+    height: 20px;
+    background: #e0e7d3;
+}
+
+fieldset textarea {
+    margin: 3px;
+    height: 165px;
+    background: #e0e7d3;
+}
+
+fieldset input {
+    margin: 3px;
+    height: 20px;
+    background: #e0e7d3;
+}
+
+fieldset table {
+    width: 100%;
+}
+
+fieldset th {
+    padding-left: 25px;
+}
+
+.table-buttons {
+    background-color:#fff;
+    border:none;
+}
+
+.table-buttons td {
+    border:none;
+}
+
+.submit input {
+    border: 1px solid #BBBBBB;
+    color:#777777;
+    padding:2px 7px;
+    font-size:11px;
+    text-transform:uppercase;
+    font-weight:bold;
+    height:24px;
+}
+
+.updated {
+    background:#ecf1e5;
+    font-size:11px;
+    margin-left:2px;
+    border:4px solid #ecf1e5;
+}
+
+.updated td {
+    padding:2px 8px;
+    font-size:11px;
+    color:#888888;
+}
+
+.dijitArrowButton {
+    height: 20px;
+}
+
+.dijitTextArea{
+    min-height:5.5em !important;
+    max-height:22em !important;
+    overflow-y: auto !important;
+    max-width: 175px;
+}
+
+.RichTextEditable{
+    min-height:18em !important;
+    max-height:18em !important;
+}
+
+.flag {
+    height: 11px;
+    width: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+.dijitTimeTextBox {
+    width: 70px !important;
+}
+
+.operatingTimeTable {
+    margin-bottom: 2px;
+    width: 370px;
+}
+.operatingTimeTable br {
+    display: none;
+}
+.daysAsTextTable br {
+    display: none;
+}
+.operatingTimeTable td {
+    padding: 3px;
+}
+
+.operatingTime {
+    width: 80px;
+}
+
+.daysOfWeek {
+    width: 370px;
+}
+.daysOfWeek span{
+    display: table-cell;
+    width: 50px;
+    text-align: center;
+    padding: 3px 0px;
+}
+.daysOfWeek label {
+    width: 50px;
+    margin-left: 0px !important;
+}
+
+/*** Operating Periods Table ***/
+
+.dayTh {
+    width: 30px;
+    text-align: center;
+}
+
+.periodsText .dijitTextBox {
+    width:300px !important;
+}
+.periodsText label {
+    width:50px !important;
+    margin-left: 3px !important;
+}
+.periodContent {
+    vertical-align: top;
+    padding: 2px;
+}
+
+.periodEntryText {
+    display: inline-block;
+    width: 230px;
+    font-size: 16px;
+    margin-top: 12px;
+    margin-left: 6px;
+}
+
+.periodEntryText label {
+    margin-left: 0px;
+}
+
+.periodEntryText br {
+    display: none;
+}
+
+.periodEdit {
+    display: inline-block;
+}
+
+.daysAsTextContainerHeader {
+    width: 300px !important;
+}
+
+.daysAsTextTable {
+    padding: 10px 0px 4px 10px;
+}
+
+.periodControls {
+    text-align: center;
+    padding: 5px 0;
+}
+
+.operatingPeriod {
+    width: 80px;
+}
+
+.buttonsHeader {
+    width:18px;
+}
+
+.operatingPeriodsHr {
+    background:#CCCCCC;
+    border:0;
+    height:3px;
+    margin: 10px -5px;
+}
+
+.previewTable {
+    border: 0px;
+    background: none;
+    margin-bottom: 1em;
+}
+
+.previewHeader {
+    border: 0px;
+    background: none;
+}
+
+.previewSubHeader {
+    border: 0px;
+    background: none;
+}
+
+.noBackground {
+    background-color: #FFFFFF !important;
+}
+
+.previewsSeperator {
+    width:10px !important;
+    border: 0px !important;
+}
+
+.previewBox {
+    vertical-align: top;
+    padding: 0 0 15px 5px
+}
+
+.previewItemLabel {
+    border: 0px;
+    padding-left: 20px;
+}
+
+.previewItemValue {
+    border: 0px;
+    padding-left: 30px;
+}
+
+.noBorder {
+    border: 0px;
+}
+
+.weeklyPreviewDay {
+    border: 0px;
+    padding-left: 20px;
+    width: 65px;
+}
+
+.weeklyPreviewValues {
+    border: 0px;
+    padding-left: 20px;
+}
+
+.weeklyPreviewValue {
+    width: 80px;
+    float: left;
+}
+
+.operatingPeriodsTableDayOfWeek {
+    margin-top: 12px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.operatingPeriodsTableDayOfWeek input {
+    margin-top: 12px;
+}
+
+.operatingPeriodsTableDayOfWeekEdit input {
+    margin-top: 30px;
+}
+
+.operatingPeriodsTableDayOfWeek label {
+    display: none;
+}
+
+.operatingPeriodsTableDayOfWeek input[type=checkbox]
+{
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    padding: 10px;
+}
+/*** /Operating Periods Table ***/
+
+.outletFeaturesView {
+    padding-bottom: 15px;
+}
+
+.outletFeaturesView > span {
+    display: table-row;
+    height: 2em;
+}
+
+.outletFeaturesViewHeader {
+    /*border-bottom: 1px dotted;*/
+
+    /*check css for label*/
+    width: 200px;
+    float: left;
+    margin-left: 5px;
+    margin-top: 0px;
+}
+
+.outletsView > span {
+    display: table-row;
+    height: 2em;
+}
+
+.outletsViewHeader {
+    width: 197px;
+    float: left;
+    margin-left: 5px;
+    margin-top: 0px;
+}
+
+.daysView > span {
+    display: table-row;
+    height: 2em;
+}
+
+.daysViewHeader {
+    width: 197px;
+    float: left;
+    margin-left: 5px;
+    margin-top: 0px;
+}
+
+.featuresSelection {
+    width: 180px;
+}
+
+.tableButtonHeader {
+    text-align: center;
+}
+
+.tableButton {
+    text-align: center;
+}
+
+.inheritedListContainer {
+    margin-top: 1em;
+    background-color: rgba(255, 165, 0, 0.49);
+    padding: 2px;}
+
+.listContainer {
+    margin-top: 1em;
+}
+
+.listContainerContent div.dijitTitlePaneContentInner {
+    overflow: auto;
+}
+
+.delete form {
+    display: inline-block;
+}
+
+.delete label {
+    float: none;
+}
+
+.delete label  span{
+    text-decoration: underline;
+    color: #7db223;
+    cursor: pointer;
+}
+
+
+.bigChecbox
+{
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    margin-top: 6px;
+}
+
+.brandsList td:nth-child(4) {
+    width: 200px;
+    text-align: center;
+}
+
+.brandsList th:nth-child(4) {
+    width: 200px;
+    text-align: center;
+}
+
+.brandsList td:nth-child(3) {
+    width: 80px;
+    text-align: center;
+}
+
+.brandsList th:nth-child(3) {
+    width: 80px;
+    text-align: center;
+}
+
+.administratorsList th:nth-child(5) {
+    width: 45px;
+    text-align: center;
+}
+
+.administratorsList td:nth-child(5) {
+    width: 45px;
+    text-align: center;
+}
+
+body {
+    padding: 40px;
+    font-family: Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+#breadcrumbContainer {
+    font-family: Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+#breadcrumb {
+    margin-bottom: 20px;
+    line-height: 30px;
+    color: #aaa;
+    padding: 1px;
+    border: 1px solid #F0F0F0;
+    margin-top: 0;
+}
+
+#breadcrumb a {
+    display: block;
+    float: left;
+    background: #F0F0F0;
+    padding-right: 10px;
+    height: 30px;
+    margin-right: 31px;
+    position: relative;
+    text-decoration: none;
+    color: #aaa;
+}
+
+#breadcrumb a:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: -30px;
+    border: 15px solid transparent;
+    border-color: #F0F0F0;
+    border-left-color: transparent;
+}
+
+#breadcrumb span {
+    color: orange;
+    font-weight: bold;
+}
+#breadcrumb a:after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    right: -30px;
+    border: 15px solid transparent;
+    border-left-color: #F0F0F0;
+}
+
+#breadcrumb a:last-of-type {
+    margin-right: 25px;
+}
+
+#breadcrumb a:first-of-type {
+    padding-left: 15px;
+}
+#breadcrumb a:first-of-type:before {
+    display: none;
+}
+
+#breadcrumb a:hover {
+    background: rgba(255, 165, 0, 0.75);;
+    color: #fff;
+    text-decoration: none;
+}
+#breadcrumb a:hover:before {
+    border-color: rgba(255, 165, 0, 0.75);
+    border-left-color: transparent;
+}
+
+#breadcrumb a:hover::after {
+    border-left-color: rgba(255, 165, 0, 0.75);
+}
+
+.outlets th:nth-child(7) {
+    width: 70px;
+}
+
+.inherittedField {
+    border: 1px solid rgba(255, 165, 0, 0.49);
+}
+
+#c_aem h2 {
+    background-color: #3C650A;
+}
+
+.eventDateTime {
+    margin-bottom: 15px;
+}
+
+.eventDateColumn {
+    padding-top: 15px;
+}
+
+.eventDateColumn > div {
+    width: 100% !important;
+}
+
+.eventDateColumn label {
+    width: 70px !important;
+}
+
+.eventTimeColumn {
+    width: 200px;
+    padding-top: 15px;
+}
+
+.eventTimeColumn label{
+    width: 70px;
+    text-align: left;
+    margin-right: 3px;
+}
+
+.eventTimeColumn > div{
+    width: 100% !important;
+}
+
+#_endTime_error_id {
+    width: 100%;
+    margin: 5px;
+}
+
+.eventMenuDetail {
+    margin-bottom: 15px;
+    width: 700px;
+}
+
+.eventMenuDetail label {
+    width: 400px !important;
+}
+
+.eventMenuInput {
+    padding-top: 15px;
+}
+
+.eventMenuInput > div {
+    width: 100% !important;
+}
+
+.eventMenuInput input {
+    width: 100px;
+}
+
+.eventMenuInput label {
+    width: 100px !important;
+}
+
+.eventMenuDetail .dijitCheckBox {
+    float: left;
+}
+
+.eventMenuDetail .checkboxLabel {
+    float: none;
+    font-weight: bold;
+}
+
+.checkboxLabel:after {
+    content: ":";
+}
+
+.eventMenuDetail .checkboxLabel:after {
+    content: "";
+}
+
+.selectedEvent {
+    border-width: 2px;
+    box-shadow: 2px 2px 1px #999;
+}
+
+.eventMenuDetail tr:nth-child(2) {
+    display: none;
+}
+
+.selectedEvent tr:nth-child(2) {
+    display: table-row !important;
+}
+
+.selectedEvent {
+    background-color: #CCCCCC !important;
+}
+
+.selectedEvent tr {
+    background-color: transparent !important;
+}
+
+.listContainerContent table:nth-child(odd) tr {
+    background-color: #FFFFFF;
+}
+
+.listContainerContent table:nth-child(even) tr {
+    background-color: #EFEFEF;
+}
+
+.eventCmsMenu {
+    width: 694px;
+    overflow-x: auto;
+}
+
+.eventMenuInput .errors {
+    margin-left: 0 !important;
+}
